@@ -19,14 +19,8 @@ else:
 
 API_KEY = "52342194d84cfe4bc6b3c191eae44334"
 
-latitude_Congonhas = -23.6263212
-longitude_Congonhas = -46.6595853
-
-latitude_Luziania = -15.7975154
-longitude_Luziania = -47.8918874
-
-latitude_Confins = -19.6340990
-longitude_Confins = -43.9653960
+latitude = -23.6263212
+longitude = -46.6595853
 
 arquivo = r"C:\Users\chenr\OneDrive\Documents\Crawler Temperatura\tempAeroporto.csv"
 #criando o a vari´´avel que será identificada para o arquivo .csv
@@ -48,24 +42,14 @@ try:
 
         with PoolManager() as pool:
             while True:
-                temperatura_Congonhas = get_temperature(latitude_Congonhas, longitude_Congonhas)
-                temperatura_Luziania = get_temperature(latitude_Luziania, longitude_Luziania)
-                temperatura_Confins = get_temperature(latitude_Confins, longitude_Confins)
+                temperatura = get_temperature(latitude, longitude)
                 data_hora = datetime.now()
                 dataFormat = data_hora.strftime('%Y-%m-%d %H:%M:%S')
 
                 msgDados = f"""
                ---------------------------------------------------
                | #          ==>     Temperatura Congonhas (SP)   |     
-               |Temperatura ==>       {temperatura_Congonhas}                      |               
-               ---------------------------------------------------
-               ---------------------------------------------------
-               | #          ==>     Temperatura Luziânia (DF)    |           
-               |Temperatura ==>        {temperatura_Luziania}                     |                       
-               ---------------------------------------------------
-                --------------------------------------------------
-               | #          ==>     Temperatura Confins (BH)     |     
-               |Temperatura ==>       {temperatura_Confins}                      |               
+               |Temperatura ==>       {temperatura}                                   |               
                ---------------------------------------------------
                
                """
