@@ -22,6 +22,7 @@ API_KEY = "52342194d84cfe4bc6b3c191eae44334"
 latitude = -23.6263212
 longitude = -46.6595853
 
+
 arquivo = r"C:\Users\chenr\OneDrive\Documents\Crawler Temperatura\tempAeroporto.csv"
 #criando o a vari´´avel que será identificada para o arquivo .csv
 
@@ -38,25 +39,25 @@ try:
     with open(arquivo, mode='w', newline='') as arquivo_csv:
         escritor_csv = csv.writer(arquivo_csv)
         
-        escritor_csv.writerow(["Temperatura de Congonhas", "Temperatura de Luziania", "Temperatura de Confins", "Data Temperatura"])
+        escritor_csv.writerow(["Temperatura de Congonhas", "Data Temperatura"])
 
         with PoolManager() as pool:
             while True:
-                temperatura = get_temperature(latitude, longitude)
+                tempAeroporto = get_temperature(latitude, longitude)
                 data_hora = datetime.now()
                 dataFormat = data_hora.strftime('%Y-%m-%d %H:%M:%S')
 
                 msgDados = f"""
                ---------------------------------------------------
                | #          ==>     Temperatura Congonhas (SP)   |     
-               |Temperatura ==>       {temperatura}                                   |               
+               |Temperatura ==>       {tempAeroporto}                      |               
                ---------------------------------------------------
                
                """
    
                 print(msgDados)
 
-                escritor_csv.writerow([temperatura_Congonhas, temperatura_Luziania, temperatura_Confins, dataFormat])
+                escritor_csv.writerow([tempAeroporto, dataFormat])
 
                 # Verifica se os dados estão realmente escritos no arquivo
                 arquivo_csv.flush()
@@ -67,8 +68,8 @@ try:
 
             
                 cursor.execute(
-                "INSERT INTO temperaturaAeroporto (temperatura, graus, fkAeroporto, dataHora) VALUES (%s, %s, %s, %s), (%s, %s, %s, %s), (%s, %s, %s, %s);",
-                (temperatura_Congonhas, '°C', 1, dataFormat, temperatura_Luziania, '°C', 2, dataFormat, temperatura_Confins, '°C', 3, dataFormat)
+                "INSERT INTO temperaturaAeroporto (temperatura, graus, fkAeroporto, dataHora) VALUES (%s, %s, %s, %s);",
+                (tempAeroporto, '°C', 1, dataFormat)
                 )
 
                 conexao.commit()
